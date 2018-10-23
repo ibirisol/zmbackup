@@ -45,7 +45,7 @@ function mailbox_backup()
     AFTER='&'"start="$(date -d $DATE +%s)"000"
   fi
   ERR=$((wget --timeout=5 --tries=2 -O $TEMPDIR/$1.tgz --user $ADMINUSER --password $ADMINPASS \
-        "https://$MAILHOST:7071/home/$1/?fmt=tgz$AFTER" --no-check-certificate) 2>&1)
+        "https://$MAILHOST:7071/home/$1/?fmt=tgz$AFTER" --no-check-certificate --auth-no-challenge) 2>&1)
   if [[ $? -eq 0 || "$ERR" == *"204 No data found"* ]]; then
     if [[ -s $TEMPDIR/$1.tgz ]]; then
       logger -i -p local7.info "Zmbackup: Mailbox - Backup for account $1 finished."

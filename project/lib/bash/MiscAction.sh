@@ -140,7 +140,7 @@ function validate_config(){
     logger -i -p local7.warn "Zmbackup: MAILHOST not informed - setting as 127.0.0.1 instead."
   fi
 
-  TMP=$((wget --timeout=5 --tries=2 --no-check-certificate -O /dev/null https://$MAILHOST:7071)2>&1)
+  TMP=$((wget --timeout=5 --tries=2 --no-check-certificate --auth-no-challenge -O /dev/null https://$MAILHOST:7071)2>&1)
   if [ $? -ne 0 ]; then
     echo "Mailbox Admin Service is Down or Unavailable - See the logs for more information."
     logger -i -p local7.err "Zmbackup: Mailbox Admin Service is Down or Unavailable."
