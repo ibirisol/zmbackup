@@ -75,8 +75,8 @@ function ldap_restore()
   ERR=$((ldapadd -x -H $LDAPSERVER -D $LDAPADMIN \
            -c -w $LDAPPASS -f $WORKDIR/$1/$2.ldiff) 2>&1)
   if ! [[ $? -eq 0 ]]; then
-    printf "\nError during the restore process for account $2. Error message below:"
-    printf "\n$2: $ERR"
+    logger -i -p local7.err "Error during the restore process for account $2. Error message below:"
+    logger -i -p local7.err "$2: $ERR"
   fi
 }
 
@@ -91,10 +91,10 @@ function mailbox_restore()
   ERR=$((curl --insecure  "https://$MAILHOST:7071/home/$2/?fmt=tgz"\
     --user "$ADMINUSER":"$ADMINPASS" --upload-file $WORKDIR/$1/$2.tgz) 2>&1)
   if ! [[ $? -eq 0 ]]; then
-    printf "Error during the restore process for account $2. Error message below:"
-    printf "$2: $ERR"
+    logger -i -p local7.err "Error during the restore process for account $2. Error message below:"
+    logger -i -p local7.err "$2: $ERR"
   elif [[ "$ERR"  == *"No such file or directory" ]]; then
-    printf "Account $2 has nothing to restore - skipping..."
+    logger -i -p local7.err "Account $2 has nothing to restore - skipping..."
   fi
 }
 
