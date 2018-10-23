@@ -107,7 +107,7 @@ function mailbox_restore()
 ###############################################################################
 function ldap_filter()
 {
-  if [[ "$LOCK_BACKUP" == "TXT" ]]; then
+  if [[ "$SESSION_TYPE" == "TXT" ]]; then
     EXIST=$(grep $1 $WORKDIR/sessions.txt 2> /dev/null | tail -1 | awk -F: '{print $3}')
   else
     TODAY=$(date +%Y-%m-%dT%H:%M:%S.%N)
